@@ -1,6 +1,5 @@
 ---
 - name: Instalacja 7-Zip na Windows Server
-  hosts: 192.168.0.4
   gather_facts: no
 
   vars:
