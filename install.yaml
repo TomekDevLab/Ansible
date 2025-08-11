@@ -1,5 +1,6 @@
 ---
 - name: Instalacja 7-Zip na Windows Server
+  hosts: win01
   gather_facts: no
 
   vars:
