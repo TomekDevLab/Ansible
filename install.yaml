@@ -1,6 +1,6 @@
 ---
 - name: Testowe zadanie na Windows Server
-  hosts: windows
+  hosts: Windows
   gather_facts: no
 
   tasks:
