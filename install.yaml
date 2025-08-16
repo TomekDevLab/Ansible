@@ -3,8 +3,8 @@
   hosts: 192.168.0.4
   gather_facts: no
   vars:
-    seven_zip_url: https://www.7-zip.org/a/7z2501-x64.exe
-    seven_zip_installer_path: C:\Temp\7z2501-x64.exe
+    seven_zip_url: https://www.7-zip.org/a/7z2501-x64.msi
+    seven_zip_installer_path: C:\Temp\7z2501-x64.msi
 
   tasks:
 
@@ -25,3 +25,8 @@
         arguments: /S
         product_id: ''
         state: present
+
+    - name: Remove 7-Zip installer (optional)
+      win_file:
+        path: "{{ seven_zip_installer_path }}"
+        state: absent
