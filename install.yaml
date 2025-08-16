@@ -1,15 +1,32 @@
 ---
-- name: Testowe zadanie na Windows Server
-  hosts: 192.168.0.4
+- name: Install 7-Zip on Windows Servers
+  hosts: windows
   gather_facts: no
+  vars:
+    seven_zip_url: https://www.7-zip.org/a/7z2501-x64.exe
+    seven_zip_installer_path: C:\Temp\7z2501-x64.exe
 
   tasks:
-    - name: Utwórz katalog C:\TestAnsible
+
+    - name: Ensure Temp directory exists
       win_file:
-        path: C:\TestAnsible
+        path: C:\Temp
         state: directory
 
-    - name: Utwórz plik tekstowy z wiadomością
-      win_copy:
-        content: "Ansible Tower działa!"
-        dest: C:\TestAnsible\hello.txt
+    - name: Download 7-Zip installer
+      win_get_url:
+        url: "{{ seven_zip_url }}"
+        dest: "{{ seven_zip_installer_path }}"
+        force: yes
+
+    - name: Install 7-Zip silently
+      win_package:
+        path: "{{ seven_zip_installer_path }}"
+        arguments: /S
+        product_id: ''
+        state: present
+
+    - name: Remove 7-Zip installer (optional)
+      win_file:
+        path: "{{ seven_zip_installer_path }}"
+        state: absent
