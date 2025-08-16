@@ -20,6 +20,6 @@
         force: yes
 
     - name: Install 7-Zip silently
-    win_command: "{{ seven_zip_installer_path }} /S"
-    args:
-      creates: 'C:\Program Files\7-Zip\7z.exe'
+      win_command: "{{ seven_zip_installer_path }} /S"
+      args:
+        creates: 'C:\Program Files\7-Zip\7z.exe'
