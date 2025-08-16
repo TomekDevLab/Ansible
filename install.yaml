@@ -1,6 +1,6 @@
 ---
 - name: Install 7-Zip on Windows Servers
-  hosts: windows
+  hosts: 192.168.0.4
   gather_facts: no
   vars:
     seven_zip_url: https://www.7-zip.org/a/7z2501-x64.exe
