@@ -1,10 +1,11 @@
 ---
-- name: Install 7-Zip on Windows Servers
+- name: Install Google Chrome on Windows Servers
   hosts: 192.168.0.4
   gather_facts: no
   vars:
-    seven_zip_url: https://www.7-zip.org/a/7z2501-x64.msi
-    seven_zip_installer_path: C:\Temp\7z2501-x64.msi
+    chrome_installer_url: https://dl.google.com/chrome/install/latest/chrome_installer.exe
+    chrome_installer_path: C:\Temp\chrome_installer.exe
+    chrome_exe_path: 'C:\Program Files\Google\Chrome\Application\chrome.exe'
 
   tasks:
 
@@ -13,13 +14,28 @@
         path: C:\Temp
         state: directory
 
-    - name: Download 7-Zip installer
+    - name: Download Google Chrome installer
       win_get_url:
-        url: "{{ seven_zip_url }}"
-        dest: "{{ seven_zip_installer_path }}"
+        url: "{{ chrome_installer_url }}"
+        dest: "{{ chrome_installer_path }}"
         force: yes
 
-    - name: Install 7-Zip silently
-      win_command: "{{ seven_zip_installer_path }}"
+    - name: Install Google Chrome silently using win_command
+      win_command: "{{ chrome_installer_path }} /silent /install"
       args:
-        creates: 'C:\Program Files\7-Zip\7z.exe'
+        creates: "{{ chrome_exe_path }}"
+
+    - name: Verify Chrome was installed
+      win_stat:
+        path: "{{ chrome_exe_path }}"
+      register: chrome_installed
+
+    - name: Show success message
+      debug:
+        msg: "Google Chrome was installed successfully."
+      when: chrome_installed.stat.exists
+
+    - name: Remove installer
+      win_file:
+        path: "{{ chrome_installer_path }}"
+        state: absent
