@@ -1,6 +1,6 @@
 ---
 - name: Testowe zadanie na Windows Server
-  hosts: 192.168.0.4
+  hosts: "{{ inventory }}"
   gather_facts: no
 
   tasks:
