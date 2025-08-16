@@ -22,11 +22,5 @@
     - name: Install 7-Zip silently
       win_package:
         path: "{{ seven_zip_installer_path }}"
-        arguments: /S
         product_id: ''
         state: present
-
-    - name: Remove 7-Zip installer (optional)
-      win_file:
-        path: "{{ seven_zip_installer_path }}"
-        state: absent
